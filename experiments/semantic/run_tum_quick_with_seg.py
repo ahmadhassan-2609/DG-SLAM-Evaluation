@@ -257,7 +257,7 @@ if __name__ == '__main__':
         ate_list.append(results["ate_score"])
     
     print("="*60)
-    print(f"FINAL ATE: {ate_list[0]:.2f} cm")
+    print(f"FINAL ATE: {ate_score*100:.2f} cm")
     print(f"Previous (no semantics): 2.23 cm")
     print(f"Paper's result: 1.6 cm")
     print("="*60)
