@@ -1,0 +1,13 @@
+/home/ubuntu/miniconda3/envs/dg-slam/lib/python3.10/site-packages/torch/functional.py:478: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at  /opt/conda/conda-bld/pytorch_1659484808560/work/aten/src/ATen/native/TensorShape.cpp:2894.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Start Running DG-SLAM FRAME SKIP TEST (NO SEMANTICS)....
+Performing evaluation on rgbd_dataset_freiburg3_walking_xyz
+checkpoints/droid.pth
+⭐️ 🌙  mapping begin!!
+FRAME SKIPPING: 2x speed - 1 frames (from 1)
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/DG-SLAM/run_tum_frame_skip.py", line 212, in <module>
+    data_reader = image_stream(scenedir, intrinsics_vec = intrinsics_vec)
+  File "/home/ubuntu/projects/DG-SLAM/run_tum_frame_skip.py", line 143, in image_stream
+    print(f"QUICK TEST MODE: Processing {test_frames} frames with {skip_rate}x frame skipping")
+NameError: name 'skip_rate' is not defined

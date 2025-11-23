@@ -1,0 +1,15 @@
+# Data files
+data/TUM/
+*.bag
+*.zip
+
+# Checkpoints
+checkpoints/
+*.pth
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
