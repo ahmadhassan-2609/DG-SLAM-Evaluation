@@ -19,7 +19,7 @@ This repository documents our testing and evaluation of the DG-SLAM paper for EE
 - `semantic/` - YOLO-based semantic mask generation and testing
 
 ### `/results/`
-- `raw_logs/` - Terminal output from our test runs
+- `/logs/` - Terminal output from our test runs
 - Test execution timestamps and performance logs
 
 ## Team
