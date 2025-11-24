@@ -73,7 +73,7 @@ def get_tensor_from_camera(RT, Tquad=False):
     tensor[3:] = tensor[3:][[1,2,3,0]]
     return tensor
 
-def loadtum(datapath, frame_rate=-1, use_seg_masks=True):
+def loadtum(datapath, frame_rate=-1, use_seg_masks=True, mask_dir='seg_mask'):
     """ read video data in tum-rgbd format """
     if os.path.isfile(os.path.join(datapath, 'groundtruth.txt')):
         pose_list = os.path.join(datapath, 'groundtruth.txt')
@@ -110,7 +110,7 @@ def loadtum(datapath, frame_rate=-1, use_seg_masks=True):
         if use_seg_masks:
             # Get the image filename and create corresponding mask path
             img_filename = os.path.basename(image_data[i, 1])
-            mask_path = os.path.join(datapath, 'seg_mask', img_filename)
+            mask_path = os.path.join(datapath, mask_dir, img_filename)
             if os.path.exists(mask_path):
                 seg_masks += [mask_path]
                 print(f"✓ Found mask for frame {ix}: {img_filename}")
@@ -136,11 +136,11 @@ def as_intrinsics_matrix(intrinsics):
     K[1, 2] = intrinsics[3]
     return K
 
-def image_stream(datapath, image_size=[384, 512], intrinsics_vec=[535.4, 539.2, 320.1, 247.6], png_depth_scale = 5000.0):
+def image_stream(datapath, image_size=[384, 512], intrinsics_vec=[535.4, 539.2, 320.1, 247.6], png_depth_scale = 5000.0, mask_dir='seg_mask'):
     """ image generator """
     # TUM
     # read all png images in folder
-    color_paths, depth_paths, poses, seg_mask_paths = loadtum(datapath, frame_rate=32, use_seg_masks=True)
+    color_paths, depth_paths, poses, seg_mask_paths = loadtum(datapath, frame_rate=32, use_seg_masks=True, mask_dir=mask_dir)
     
     # QUICK TEST: Process only first 100 frames
     test_frames = 100
@@ -203,7 +203,8 @@ if __name__ == '__main__':
     parser.add_argument("--backend_nms", type=int, default=3)
 
     parser.add_argument('--config', default="configs/TUM_RGBD/fr3_walk_xyz.yaml", type=str, help='Path to config file.')
-
+    parser.add_argument('--mask_dir', type=str, default='seg_mask', 
+                   help='Name of mask directory (seg_mask, seg_mask_noise20, etc.)')
     args = parser.parse_args()
     torch.multiprocessing.set_start_method('spawn')
 
@@ -229,7 +230,7 @@ if __name__ == '__main__':
         print(f"Loading data from: {scenedir}")
 
         intrinsics_vec = [cfg['cam']['fx'], cfg['cam']['fy'], cfg['cam']['cx'], cfg['cam']['cy']]
-        data_reader = image_stream(scenedir, intrinsics_vec = intrinsics_vec)
+        data_reader = image_stream(scenedir, intrinsics_vec = intrinsics_vec, mask_dir=args.mask_dir)
         cfg["data"]["n_img"] = len(data_reader)
 
         ## tracking and mapping
