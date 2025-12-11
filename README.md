@@ -15,11 +15,13 @@ This repository documents our testing and evaluation of the DG-SLAM paper for EE
 
 ### `/experiments/`
 - `baseline/` - Scripts for testing without semantic segmentation
+- `density/` - Density variations
 - `robustness/` - Frame-skipping stress tests  
 - `semantic/` - YOLO-based semantic mask generation and testing
 
 ### `/results/`
 - `/logs/` - Terminal output from our test runs
+- `/figures/` - figures for visualization
 - Test execution timestamps and performance logs
 
 ## Team
